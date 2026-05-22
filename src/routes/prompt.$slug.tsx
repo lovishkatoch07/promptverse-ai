@@ -6,7 +6,7 @@ import {
 import { Layout } from "@/components/promptverse/Layout";
 import { PromptCard } from "@/components/promptverse/PromptCard";
 import { Button } from "@/components/ui/button";
-import { getPromptBySlug, getRelatedPrompts } from "@/data/prompts";
+import { getPromptBySlug, getRelatedPrompts, type Prompt } from "@/data/prompts";
 
 export const Route = createFileRoute("/prompt/$slug")({
   loader: ({ params }) => {
@@ -65,7 +65,8 @@ function CopyButton({ text, label = "Copy prompt" }: { text: string; label?: str
 }
 
 function PromptPage() {
-  const { prompt: p, related } = Route.useLoaderData();
+  const data = Route.useLoaderData() as { prompt: Prompt; related: Prompt[] };
+  const { prompt: p, related } = data;
   const [liked, setLiked] = useState(false);
   const [saved, setSaved] = useState(false);
 
