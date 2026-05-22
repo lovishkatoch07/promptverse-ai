@@ -9,38 +9,208 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WorkflowsRouteImport } from './routes/workflows'
+import { Route as UploadRouteImport } from './routes/upload'
+import { Route as SignupRouteImport } from './routes/signup'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
+import { Route as ExploreRouteImport } from './routes/explore'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PromptSlugRouteImport } from './routes/prompt.$slug'
+import { Route as ProfileHandleRouteImport } from './routes/profile.$handle'
 
+const WorkflowsRoute = WorkflowsRouteImport.update({
+  id: '/workflows',
+  path: '/workflows',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UploadRoute = UploadRouteImport.update({
+  id: '/upload',
+  path: '/upload',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignupRoute = SignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExploreRoute = ExploreRouteImport.update({
+  id: '/explore',
+  path: '/explore',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PromptSlugRoute = PromptSlugRouteImport.update({
+  id: '/prompt/$slug',
+  path: '/prompt/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileHandleRoute = ProfileHandleRouteImport.update({
+  id: '/profile/$handle',
+  path: '/profile/$handle',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRoute
+  '/explore': typeof ExploreRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
+  '/signup': typeof SignupRoute
+  '/upload': typeof UploadRoute
+  '/workflows': typeof WorkflowsRoute
+  '/profile/$handle': typeof ProfileHandleRoute
+  '/prompt/$slug': typeof PromptSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRoute
+  '/explore': typeof ExploreRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
+  '/signup': typeof SignupRoute
+  '/upload': typeof UploadRoute
+  '/workflows': typeof WorkflowsRoute
+  '/profile/$handle': typeof ProfileHandleRoute
+  '/prompt/$slug': typeof PromptSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRoute
+  '/explore': typeof ExploreRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
+  '/signup': typeof SignupRoute
+  '/upload': typeof UploadRoute
+  '/workflows': typeof WorkflowsRoute
+  '/profile/$handle': typeof ProfileHandleRoute
+  '/prompt/$slug': typeof PromptSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/dashboard'
+    | '/explore'
+    | '/forgot-password'
+    | '/login'
+    | '/signup'
+    | '/upload'
+    | '/workflows'
+    | '/profile/$handle'
+    | '/prompt/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/dashboard'
+    | '/explore'
+    | '/forgot-password'
+    | '/login'
+    | '/signup'
+    | '/upload'
+    | '/workflows'
+    | '/profile/$handle'
+    | '/prompt/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/dashboard'
+    | '/explore'
+    | '/forgot-password'
+    | '/login'
+    | '/signup'
+    | '/upload'
+    | '/workflows'
+    | '/profile/$handle'
+    | '/prompt/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DashboardRoute: typeof DashboardRoute
+  ExploreRoute: typeof ExploreRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
+  LoginRoute: typeof LoginRoute
+  SignupRoute: typeof SignupRoute
+  UploadRoute: typeof UploadRoute
+  WorkflowsRoute: typeof WorkflowsRoute
+  ProfileHandleRoute: typeof ProfileHandleRoute
+  PromptSlugRoute: typeof PromptSlugRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/workflows': {
+      id: '/workflows'
+      path: '/workflows'
+      fullPath: '/workflows'
+      preLoaderRoute: typeof WorkflowsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/upload': {
+      id: '/upload'
+      path: '/upload'
+      fullPath: '/upload'
+      preLoaderRoute: typeof UploadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/explore': {
+      id: '/explore'
+      path: '/explore'
+      fullPath: '/explore'
+      preLoaderRoute: typeof ExploreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,12 +218,45 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/prompt/$slug': {
+      id: '/prompt/$slug'
+      path: '/prompt/$slug'
+      fullPath: '/prompt/$slug'
+      preLoaderRoute: typeof PromptSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile/$handle': {
+      id: '/profile/$handle'
+      path: '/profile/$handle'
+      fullPath: '/profile/$handle'
+      preLoaderRoute: typeof ProfileHandleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DashboardRoute: DashboardRoute,
+  ExploreRoute: ExploreRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
+  LoginRoute: LoginRoute,
+  SignupRoute: SignupRoute,
+  UploadRoute: UploadRoute,
+  WorkflowsRoute: WorkflowsRoute,
+  ProfileHandleRoute: ProfileHandleRoute,
+  PromptSlugRoute: PromptSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
