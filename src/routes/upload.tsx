@@ -1,9 +1,10 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { Layout } from "@/components/promptverse/Layout";
 import { Button } from "@/components/ui/button";
 import { UploadCloud, X, Plus } from "lucide-react";
 import { categories } from "@/data/prompts";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/upload")({
   head: () => ({
@@ -35,6 +36,7 @@ function UploadPage() {
   const [tag, setTag] = useState("");
   const [drag, setDrag] = useState(false);
   const [preview, setPreview] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const onDrop = (e: React.DragEvent) => {
     e.preventDefault();
@@ -43,13 +45,23 @@ function UploadPage() {
     if (f) setPreview(URL.createObjectURL(f));
   };
 
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    toast.success("Prompt published successfully! Redirecting...", {
+      description: "Your work is now live on the explore page.",
+    });
+    setTimeout(() => {
+      navigate({ to: "/explore" });
+    }, 2000);
+  };
+
   return (
     <Layout>
       <div className="mx-auto max-w-5xl px-6 py-12">
         <h1 className="text-4xl font-semibold tracking-tight">Upload a prompt</h1>
         <p className="mt-1 text-muted-foreground">Share your work with 92K+ creators.</p>
 
-        <form className="mt-10 grid gap-8 lg:grid-cols-[1fr_1.2fr]" onSubmit={(e) => e.preventDefault()}>
+        <form className="mt-10 grid gap-8 lg:grid-cols-[1fr_1.2fr]" onSubmit={onSubmit}>
           {/* Media */}
           <div>
             <div
@@ -86,13 +98,13 @@ function UploadPage() {
           {/* Fields */}
           <div className="space-y-5">
             <Field label="Title">
-              <input className={inputCls} placeholder="Neon Oracle Portrait" />
+              <input required className={inputCls} placeholder="Neon Oracle Portrait" />
             </Field>
             <Field label="Description" hint="Optional, 280 chars">
               <textarea rows={3} className={inputCls} placeholder="What makes this prompt special?" />
             </Field>
             <Field label="Prompt">
-              <textarea rows={5} className={`${inputCls} font-mono`} placeholder="ultra detailed cinematic portrait..." />
+              <textarea required rows={5} className={`${inputCls} font-mono`} placeholder="ultra detailed cinematic portrait..." />
             </Field>
             <Field label="Negative prompt" hint="Optional">
               <textarea rows={2} className={`${inputCls} font-mono`} placeholder="blurry, watermark, text..." />
@@ -145,7 +157,7 @@ function UploadPage() {
 
             <div className="flex items-center justify-end gap-2 pt-4">
               <Button asChild variant="glass"><Link to="/dashboard">Cancel</Link></Button>
-              <Button variant="hero"><Plus className="h-4 w-4" /> Publish prompt</Button>
+              <Button type="submit" variant="hero"><Plus className="h-4 w-4" /> Publish prompt</Button>
             </div>
           </div>
         </form>

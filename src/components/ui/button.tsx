@@ -1,11 +1,12 @@
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
+import { motion } from "framer-motion";
 
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
@@ -16,9 +17,9 @@ const buttonVariants = cva(
         secondary: "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        hero: "bg-gradient-primary text-primary-foreground shadow-glow hover:shadow-neon hover:scale-[1.02] transition-all duration-300",
-        glass: "glass-strong text-foreground hover:bg-white/10 transition-all",
-        neon: "bg-transparent border border-primary/40 text-foreground hover:border-primary hover:shadow-glow transition-all",
+        hero: "bg-gradient-primary text-primary-foreground shadow-glow",
+        glass: "glass-strong text-foreground",
+        neon: "bg-transparent border border-primary/40 text-foreground",
       },
       size: {
         default: "h-9 px-4 py-2",
@@ -42,9 +43,36 @@ export interface ButtonProps
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
-    const Comp = asChild ? Slot : "button";
+    // Framer Motion props for enhanced interactions
+    const motionProps = {
+      whileHover: { 
+        scale: 1.05,
+        boxShadow: variant === 'hero' || variant === 'neon' ? 'var(--shadow-neon)' : '0 10px 30px -10px rgba(0,0,0,0.5)',
+      },
+      whileTap: { scale: 0.95 },
+      transition: { type: "spring", stiffness: 400, damping: 15 }
+    };
+
+    if (asChild) {
+      return (
+        <Slot
+          className={cn(buttonVariants({ variant, size, className }))}
+          ref={ref}
+          {...props}
+        />
+      );
+    }
+
+    // Filter out props that conflict with Framer Motion
+    const { onDrag, onDragStart, onDragEnd, onAnimationStart, ...filteredProps } = props as any;
+
     return (
-      <Comp className={cn(buttonVariants({ variant, size, className }))} ref={ref} {...props} />
+      <motion.button
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref}
+        {...motionProps}
+        {...filteredProps}
+      />
     );
   },
 );

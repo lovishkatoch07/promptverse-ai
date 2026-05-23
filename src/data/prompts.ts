@@ -29,7 +29,7 @@ export type Prompt = {
 };
 
 const av = (seed: string) =>
-  `https://api.dicebear.com/7.x/glass/svg?seed=${encodeURIComponent(seed)}`;
+  `https://api.dicebear.com/7.x/identicon/svg?seed=${encodeURIComponent(seed)}`;
 
 export const categories = [
   "All",

@@ -7,6 +7,7 @@ import { Layout } from "@/components/promptverse/Layout";
 import { PromptCard } from "@/components/promptverse/PromptCard";
 import { Button } from "@/components/ui/button";
 import { getPromptBySlug, getRelatedPrompts, type Prompt } from "@/data/prompts";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/prompt/$slug")({
   loader: ({ params }) => {
@@ -55,6 +56,7 @@ function CopyButton({ text, label = "Copy prompt" }: { text: string; label?: str
       onClick={() => {
         navigator.clipboard?.writeText(text);
         setDone(true);
+        toast.success(`${label} copied!`);
         setTimeout(() => setDone(false), 1500);
       }}
     >
@@ -69,6 +71,13 @@ function PromptPage() {
   const { prompt: p, related } = data;
   const [liked, setLiked] = useState(false);
   const [saved, setSaved] = useState(false);
+
+  const toggle = (fn: (v: boolean) => void, label: string, active: boolean) => {
+    fn(!active);
+    if (!active) {
+      toast.success(`${label}!`);
+    }
+  };
 
   return (
     <Layout>
@@ -89,13 +98,16 @@ function PromptPage() {
 
             {/* Engagement */}
             <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-white/10 bg-card p-3">
-              <button onClick={() => setLiked((v) => !v)} className={`inline-flex h-10 items-center gap-2 rounded-xl border border-white/10 px-4 text-sm transition hover:bg-white/5 ${liked ? "text-primary" : ""}`}>
+              <button onClick={() => toggle(setLiked, "Liked", liked)} className={`inline-flex h-10 items-center gap-2 rounded-xl border border-white/10 px-4 text-sm transition hover:bg-white/5 ${liked ? "text-primary" : ""}`}>
                 <Heart className={`h-4 w-4 ${liked ? "fill-primary" : ""}`} /> {(p.likes + (liked ? 1 : 0)).toLocaleString()}
               </button>
-              <button onClick={() => setSaved((v) => !v)} className="inline-flex h-10 items-center gap-2 rounded-xl border border-white/10 px-4 text-sm transition hover:bg-white/5">
+              <button onClick={() => toggle(setSaved, "Saved to collection", saved)} className="inline-flex h-10 items-center gap-2 rounded-xl border border-white/10 px-4 text-sm transition hover:bg-white/5">
                 <Bookmark className={`h-4 w-4 ${saved ? "fill-current" : ""}`} /> {saved ? "Saved" : "Save"}
               </button>
-              <button className="inline-flex h-10 items-center gap-2 rounded-xl border border-white/10 px-4 text-sm transition hover:bg-white/5">
+              <button onClick={() => {
+                navigator.clipboard?.writeText(window.location.href);
+                toast.success("Link copied to clipboard!");
+              }} className="inline-flex h-10 items-center gap-2 rounded-xl border border-white/10 px-4 text-sm transition hover:bg-white/5">
                 <Share2 className="h-4 w-4" /> Share
               </button>
               <span className="ml-auto text-xs text-muted-foreground">{p.saves.toLocaleString()} saves</span>
