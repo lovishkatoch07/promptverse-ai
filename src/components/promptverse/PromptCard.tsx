@@ -131,11 +131,8 @@ export function PromptCard({ p }: { p: Prompt }) {
               </div>
             </div>
 
-            {/* Action Buttons (Slide Up) */}
             <motion.div 
-              className="mt-5 flex items-center gap-2 opacity-0 transition-all duration-500 group-hover:opacity-100"
-              initial={{ y: 20 }}
-              whileHover={{ y: 0 }}
+              className="mt-5 flex items-center gap-2 opacity-0 translate-y-4 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0"
             >
               <motion.button
                 whileHover={{ scale: 1.1, backgroundColor: "rgba(var(--primary), 0.2)" }}

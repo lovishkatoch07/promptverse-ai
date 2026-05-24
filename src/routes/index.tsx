@@ -137,7 +137,7 @@ function Index() {
   return (
     <Layout>
       {/* HERO SECTION */}
-      <section className="relative pt-32 pb-24 lg:pt-48 lg:pb-40 overflow-hidden">
+      <section className="relative pt-24 pb-24 lg:pt-32 lg:pb-32 overflow-hidden">
         {/* Background elements */}
         <div className="absolute inset-0 -z-10">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 h-[1000px] w-[1000px] bg-primary/10 blur-[160px] animate-pulse-slow" />
@@ -152,7 +152,7 @@ function Index() {
               The Visual Engine for 2026
             </div>
             
-            <h1 className="text-balance text-6xl font-black leading-[0.95] tracking-tight sm:text-8xl lg:text-[10rem]">
+            <h1 className="text-balance text-5xl font-black leading-[0.95] tracking-tight sm:text-7xl lg:text-8xl">
               DESIGN THE <br />
               <span className="text-gradient-primary">UNTHINKABLE.</span>
             </h1>
